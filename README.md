@@ -32,11 +32,19 @@ oc adm policy add-role-to-user cluster-admin admin -n easytravel
 oc adm policy add-scc-to-user anyuid -z default -n easytravel
 ```
 
-### 1. Deploy
+###label the node
+kubectl label node <node_name> <label> --overwrite
 
-`./deploy.sh` deploys easyTravel on OpenShift. Undo via `./clean.sh`.
+### 1. Create project 
 
-### 2. Expose Services
+##deploy the project with node-selector to control workload to desired nodes to minimize dynatrace license consumption 
+oc adm new-project --node-selector=<label>  easytravel
+
+### 2. Deploy all resources 
+oc project easytravel
+oc apply -f easytravel.yml
+
+### 3. Expose Services
 
 ```
 oc get svc  -n easytravel
