@@ -38,6 +38,7 @@ kubectl label node <node_name> <label> --overwrite
 ### 1. Create project 
 
 ##deploy the project with node-selector to control workload to desired nodes to minimize dynatrace license consumption 
+
 oc adm new-project --node-selector=<label>  easytravel
 
 ### 2. Deploy all resources 
