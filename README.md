@@ -33,13 +33,13 @@ oc adm policy add-scc-to-user anyuid -z default -n easytravel
 ```
 
 ###label the node
-kubectl label node <node_name> <label> --overwrite
+kubectl label node "<node_name>" "<label>" --overwrite
 
 ### 1. Create project 
 
 ##deploy the project with node-selector to control workload to desired nodes to minimize dynatrace license consumption 
 
-oc adm new-project --node-selector=<label>  easytravel
+oc adm new-project --node-selector="<label>"  easytravel
 
 ### 2. Deploy all resources 
 oc project easytravel
