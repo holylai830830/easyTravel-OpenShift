@@ -26,7 +26,7 @@ This project deploys the [Dynatrace easyTravel](https://community.dynatrace.com/
 Login as *system:admin* and grant rights to user *admin* via:
 
 ```
-oc login https://${OS_MASTER_IP}:8443 -u system:admin
+oc login -u $OCP_ADMIN_USER  https://$API_URL:6443
 oc new-project easytravel
 oc adm policy add-role-to-user cluster-admin admin -n easytravel
 oc adm policy add-scc-to-user anyuid -z default -n easytravel
@@ -38,32 +38,11 @@ oc adm policy add-scc-to-user anyuid -z default -n easytravel
 
 ### 2. Expose Services
 
-- Configure a [route](https://docs.openshift.com/enterprise/latest/dev_guide/routes.html) in OpenShift to expose easyTravel services to the public (provided you have configured a domain for OpenShift).
-- Alternatively, you can map a pod's port to your local host via the `oc port-foward` command. The following example maps the `easytravel-www-123abc` pod's cluster internal port `80` to your local host's port `32123`. A list of available pod names is provided via `oc get pods`.
-
 ```
-oc get pods (gives e.g. easytravel-www-123abc)
-oc port-forward easytravel-www-123abc 32123:80
+oc get svc  -n easytravel
+oc expose service easytravel-www
 ```
 
-### 3. Apply Synthetic Load
-
-With the `easytravel-www` service being exposed, you can apply synthetic load using the *UEM Load Generator* component from our [easyTravel-Docker](https://github.com/dynatrace-innovationlab/easyTravel-Docker) project. Suppose the service has been made available on `http://localhost:32123`:
-
-```
-docker run -ti --rm \
-  --env ET_FRONTEND_URL='http://localhost:32123' \
-  dynatrace/easytravel-loadgen
-```
-
-By additionally exposing the `easytravel-backend` service and providing its URL through `ET_BACKEND_URL`, the *UEM Load Generator* component will continually apply problems from an initial set of easyTravel problem patterns, as described [here](https://github.com/dynatrace-innovationlab/easyTravel-Docker). Suppose the service has been made available on `http://localhost:32124`:
-
-```
-docker run -ti --rm \
-  --env ET_FRONTEND_URL='http://localhost:32123' \
-  --env ET_BACKEND_URL='http://localhost:32124' \
-  dynatrace/easytravel-loadgen
-```
 
 ## Monitoring easyTravel with Dynatrace
 
