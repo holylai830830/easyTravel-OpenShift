@@ -1,6 +1,6 @@
 # easyTravel-OpenShift
 
-![easyTravel Logo](https://github.com/dynatrace-innovationlab/easyTravel-Builder/blob/images/easyTravel-logo.png)
+![easyTravel Logo](https://github.com/holylai830830/easyTravel-OpenShift/blob/master/screen.png)
 
 This project deploys the [Dynatrace easyTravel](https://community.dynatrace.com/community/display/DL/Demo+Applications+-+easyTravel) demo application on [RedHat OpenShift](https://www.openshift.com).
 
