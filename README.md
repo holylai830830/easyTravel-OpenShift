@@ -27,7 +27,7 @@ Login as *system:admin* and grant rights to user *admin* via:
 
 ```
 oc login -u $OCP_ADMIN_USER  https://$API_URL:6443
-oc adm new-project --node-selector="app=easytravel" easytravel
+
 oc adm policy add-role-to-user cluster-admin admin -n easytravel
 oc adm policy add-scc-to-user anyuid -z default -n easytravel
 ```
@@ -41,7 +41,7 @@ kubectl label node worker04.ocp4.lab.local app=easytravel --overwrite
 
 ##deploy the project with node-selector to control workload to desired nodes to minimize dynatrace license consumption 
 
-oc adm new-project --node-selector="<label>"  easytravel
+oc adm new-project --node-selector="app=easytravel" easytravel
 
 ### 2. Deploy all resources 
 oc project easytravel
