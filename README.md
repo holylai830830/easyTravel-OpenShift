@@ -27,13 +27,15 @@ Login as *system:admin* and grant rights to user *admin* via:
 
 ```
 oc login -u $OCP_ADMIN_USER  https://$API_URL:6443
-oc new-project easytravel
+oc adm new-project --node-selector="app=easytravel" easytravel
 oc adm policy add-role-to-user cluster-admin admin -n easytravel
 oc adm policy add-scc-to-user anyuid -z default -n easytravel
 ```
 
 ###label the node
-kubectl label node "<node_name>" "<label>" --overwrite
+kubectl label node worker01.ocp4.lab.local app=easytravel --overwrite
+kubectl label node worker02.ocp4.lab.local app=easytravel --overwrite
+kubectl label node worker04.ocp4.lab.local app=easytravel --overwrite
 
 ### 1. Create project 
 
